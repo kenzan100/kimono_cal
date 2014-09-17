@@ -23,3 +23,4 @@ much of Google Calendar API code is from
 * follow the [auth instruction](https://github.com/google/google-api-ruby-client-samples/tree/master/calendar)
 * bundle exec ruby calendar.rb
 * go to 'http://localhost:4567' for authentication and import.
+* go to 'http://localhost:4567/kimono' to retrieve kimono_lab api.
