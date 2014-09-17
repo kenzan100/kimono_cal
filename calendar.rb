@@ -8,10 +8,12 @@ require 'logger'
 require 'byebug' if development?
 require 'date'
 require 'json'
+require 'rest_client'
 
 enable :sessions
 
 CREDENTIAL_STORE_FILE = "#{$0}-oauth2.json"
+JSON_FILE_NAME = "start_a_startup_school_kimono_data.json"
 
 def logger; settings.logger end
 def api_client; settings.api_client; end
@@ -89,16 +91,21 @@ get '/oauth2callback' do
   redirect to('/')
 end
 
+get '/kimono' do
+  response = RestClient.get "https://www.kimonolabs.com/api/5bpn6e0g?apikey=#{ENV['KIMONO_API_KEY']}"
+  File.open(JSON_FILE_NAME, 'w'){|file| file.write response}
+  JSON.parse(response)["results"]["classes"].to_s
+end
+
 get '/' do
   result = api_client.execute(api_method: calendar_api.events.list,
-                              parameters: {
-                                'calendarId' => ENV['CAL_ID'],
-                              }, authorization: user_credentials)
+                              parameters: { 'calendarId' => ENV['CAL_ID'] },
+                              authorization: user_credentials)
   formatted_result = {}
   result.data.items.each{|item| formatted_result[item.start.date] = item.id }
   formatted_result.reject!{|k,v| k.nil?}
 
-  file = File.read "start_a_startup_school_kimono_data.json"
+  file = File.read JSON_FILE_NAME
   kimono_json = JSON.parse file
   kimono_json_without_header = kimono_json["results"]["classes"].drop(1) #omit header
   kimono_result = kimono_json_without_header.map do |a_class|

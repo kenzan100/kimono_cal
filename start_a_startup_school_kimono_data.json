@@ -1,1 +1,183 @@
-{"name":"start_a_startup_course_schedule","frequency":"Daily","version":1,"newdata":false,"lastrunstatus":"success","thisversionrun":"Wed Sep 17 2014 07:07:17 GMT+0000 (UTC)","lastsuccess":"Wed Sep 17 2014 07:07:17 GMT+0000 (UTC)","nextrun":"Thu Sep 18 2014 07:07:17 GMT+0000 (UTC)","results":{"classes":[{"date":"Date","speaker":"Speaker","topic":{"text":"Topic","href":""}},{"date":"9/23/14","speaker":"Sam Altman, \nPresident, Y Combinator","topic":{"text":"Welcome, and Ideas, Products, Teams and Execution Part I","href":"http://startupclass.samaltman.com/courses/lec01/"}},{"date":"9/25/14","speaker":"Sam Altman, \nPresident, Y Combinator","topic":{"text":"Ideas, Products, Teams and Execution Part II","href":""}},{"date":"9/30/14","speaker":"Paul Graham, \nFounder, Y Combinator","topic":{"text":"How to Have Ideas and How to Get Started","href":""}},{"date":"10/2/14","speaker":"Adora Cheung, \nFounder, Homejoy","topic":{"text":"Building Product, Talking to Users, and Growing","href":""}},{"date":"10/7/14","speaker":"Peter Thiel, \nFounder, Paypal & Palantir, and Partner, Founders Fund","topic":{"text":"Business Strategy and Monopoly Theory","href":""}},{"date":"10/9/14","speaker":"Alex Schultz, \nVP Growth, Facebook","topic":{"text":"Growth","href":""}},{"date":"10/14/14","speaker":"Kevin Hale, \nFounder, Wufoo and Partner, Y Combinator","topic":{"text":"How to Build Products Users Love, Part I","href":""}},{"date":"10/16/14","speaker":"TBA","topic":{"text":"","href":""}},{"date":"10/21/14","speaker":"Marc Andreessen, \nFounder, Andreessen Horowitz and Founder, Netscape\nRon Conway, \nFounder, SV Angel\nBen Silbermann, \nFounder & CEO, Pinterest","topic":{"text":"How to Raise Money","href":""}},{"date":"10/23/14","speaker":"Alfred Lin, \nFormer COO, Zappos and Partner, Sequoia Capital","topic":{"text":"Company Culture and Buliding a Team, Part I","href":""}},{"date":"10/28/14","speaker":"Patrick and John Collison, \nFounders, Stripe","topic":{"text":"Company Culture and Building a Team, Part II","href":""}},{"date":"10/30/14","speaker":"Aaron Levie, \nFounder, Box","topic":{"text":"Sales and Marketing","href":""}},{"date":"11/4/14","speaker":"Reid Hoffman, \nPartner, Greylock Ventures and Founder, LinkedIn","topic":{"text":"TBA","href":""}},{"date":"11/6/14","speaker":"Keith Rabois, \nPartner, Khosla Ventures","topic":{"text":"How to Operate","href":""}},{"date":"11/11/14","speaker":"Ben Horowitz, \nFounder, Andreessen Horowitz, and Founder, and Opsware","topic":{"text":"How to Manage","href":""}},{"date":"11/13/14","speaker":"Marissa Mayer, \nCEO, Yahoo","topic":{"text":"TBA","href":""}},{"date":"11/18/14","speaker":"Hosain Rahman, \nFounder, Jawbone","topic":{"text":"How to Build Products Users Love, Part II","href":""}},{"date":"11/20/14","speaker":"Kirsty Nathoo and Carolynn Levy, \nPartners, Y Combinator","topic":{"text":"Mechanics--Legal, Finance, HR, etc.","href":""}},{"date":"12/2/14","speaker":"TBA","topic":{"text":"","href":""}},{"date":"12/4/14","speaker":"Sam Altman, \nPresident, Y Combinator","topic":{"text":"Closing Thoughts and Later-Stage Advice","href":""}}]},"count":21}
+{
+  "name": "start_a_startup_course_schedule",
+  "count": 21,
+  "frequency": "Daily",
+  "version": 1,
+  "newdata": false,
+  "lastrunstatus": "success",
+  "thisversionrun": "Wed Sep 17 2014 07:07:17 GMT+0000 (UTC)",
+  "lastsuccess": "Wed Sep 17 2014 07:07:17 GMT+0000 (UTC)",
+  "nextrun": "Thu Sep 18 2014 07:07:17 GMT+0000 (UTC)",
+  "results": {
+    "classes": [
+      {
+        "date": "Date",
+        "speaker": "Speaker",
+        "topic": {
+          "text": "Topic",
+          "href": ""
+        }
+      },
+      {
+        "date": "9/23/14",
+        "speaker": "Sam Altman, \nPresident, Y Combinator",
+        "topic": {
+          "text": "Welcome, and Ideas, Products, Teams and Execution Part I",
+          "href": "http://startupclass.samaltman.com/courses/lec01/"
+        }
+      },
+      {
+        "date": "9/25/14",
+        "speaker": "Sam Altman, \nPresident, Y Combinator",
+        "topic": {
+          "text": "Ideas, Products, Teams and Execution Part II",
+          "href": ""
+        }
+      },
+      {
+        "date": "9/30/14",
+        "speaker": "Paul Graham, \nFounder, Y Combinator",
+        "topic": {
+          "text": "How to Have Ideas and How to Get Started",
+          "href": ""
+        }
+      },
+      {
+        "date": "10/2/14",
+        "speaker": "Adora Cheung, \nFounder, Homejoy",
+        "topic": {
+          "text": "Building Product, Talking to Users, and Growing",
+          "href": ""
+        }
+      },
+      {
+        "date": "10/7/14",
+        "speaker": "Peter Thiel, \nFounder, Paypal & Palantir, and Partner, Founders Fund",
+        "topic": {
+          "text": "Business Strategy and Monopoly Theory",
+          "href": ""
+        }
+      },
+      {
+        "date": "10/9/14",
+        "speaker": "Alex Schultz, \nVP Growth, Facebook",
+        "topic": {
+          "text": "Growth",
+          "href": ""
+        }
+      },
+      {
+        "date": "10/14/14",
+        "speaker": "Kevin Hale, \nFounder, Wufoo and Partner, Y Combinator",
+        "topic": {
+          "text": "How to Build Products Users Love, Part I",
+          "href": ""
+        }
+      },
+      {
+        "date": "10/16/14",
+        "speaker": "TBA",
+        "topic": {
+          "text": "",
+          "href": ""
+        }
+      },
+      {
+        "date": "10/21/14",
+        "speaker": "Marc Andreessen, \nFounder, Andreessen Horowitz and Founder, Netscape\nRon Conway, \nFounder, SV Angel\nBen Silbermann, \nFounder & CEO, Pinterest",
+        "topic": {
+          "text": "How to Raise Money",
+          "href": ""
+        }
+      },
+      {
+        "date": "10/23/14",
+        "speaker": "Alfred Lin, \nFormer COO, Zappos and Partner, Sequoia Capital",
+        "topic": {
+          "text": "Company Culture and Buliding a Team, Part I",
+          "href": ""
+        }
+      },
+      {
+        "date": "10/28/14",
+        "speaker": "Patrick and John Collison, \nFounders, Stripe",
+        "topic": {
+          "text": "Company Culture and Building a Team, Part II",
+          "href": ""
+        }
+      },
+      {
+        "date": "10/30/14",
+        "speaker": "Aaron Levie, \nFounder, Box",
+        "topic": {
+          "text": "Sales and Marketing",
+          "href": ""
+        }
+      },
+      {
+        "date": "11/4/14",
+        "speaker": "Reid Hoffman, \nPartner, Greylock Ventures and Founder, LinkedIn",
+        "topic": {
+          "text": "TBA",
+          "href": ""
+        }
+      },
+      {
+        "date": "11/6/14",
+        "speaker": "Keith Rabois, \nPartner, Khosla Ventures",
+        "topic": {
+          "text": "How to Operate",
+          "href": ""
+        }
+      },
+      {
+        "date": "11/11/14",
+        "speaker": "Ben Horowitz, \nFounder, Andreessen Horowitz, and Founder, and Opsware",
+        "topic": {
+          "text": "How to Manage",
+          "href": ""
+        }
+      },
+      {
+        "date": "11/13/14",
+        "speaker": "Marissa Mayer, \nCEO, Yahoo",
+        "topic": {
+          "text": "TBA",
+          "href": ""
+        }
+      },
+      {
+        "date": "11/18/14",
+        "speaker": "Hosain Rahman, \nFounder, Jawbone",
+        "topic": {
+          "text": "How to Build Products Users Love, Part II",
+          "href": ""
+        }
+      },
+      {
+        "date": "11/20/14",
+        "speaker": "Kirsty Nathoo and Carolynn Levy, \nPartners, Y Combinator",
+        "topic": {
+          "text": "Mechanics--Legal, Finance, HR, etc.",
+          "href": ""
+        }
+      },
+      {
+        "date": "12/2/14",
+        "speaker": "TBA",
+        "topic": {
+          "text": "",
+          "href": ""
+        }
+      },
+      {
+        "date": "12/4/14",
+        "speaker": "Sam Altman, \nPresident, Y Combinator",
+        "topic": {
+          "text": "Closing Thoughts and Later-Stage Advice",
+          "href": ""
+        }
+      }
+    ]
+  }
+}
