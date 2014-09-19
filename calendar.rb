@@ -94,7 +94,7 @@ end
 get '/kimono' do
   response = RestClient.get "https://www.kimonolabs.com/api/5bpn6e0g?apikey=#{ENV['KIMONO_API_KEY']}"
   File.open(JSON_FILE_NAME, 'w'){|file| file.write response}
-  JSON.parse(response)["results"]["classes"].to_s
+  [200, {'Content-Type' => 'application/json'}, JSON.parse(response)["results"]["classes"].to_json]
 end
 
 get '/' do
@@ -126,14 +126,20 @@ get '/' do
     method     = "calendar_api.events.insert"
     parameters = {'calendarId' => ENV['CAL_ID']}
     if formatted_result[req["start"]["date"]]
-      method = "calendar_api.events.patch"
+      method = "calendar_api.events.update"
       parameters['eventId'] = formatted_result[req["start"]["date"]]
     end
     batch.add(api_method: eval(method),
               parameters: parameters,
               authorization: user_credentials,
-              body_object: req)
+              body_object: req,
+              headers: {'Content-Type' => 'application/json'})
   end
   result = api_client.execute(batch)
-  [result.status, {'Content-Type' => 'application/json'}, result.data.to_json]
+  output = result.request.calls.map do |res|
+    method = res[1].api_method.id
+    body = res[1].body
+    [method, body]
+  end
+  [result.status, {'Content-Type' => 'application/json'}, output.to_json]
 end
