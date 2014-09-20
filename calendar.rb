@@ -105,6 +105,10 @@ get '/' do
   result.data.items.each{|item| formatted_result[item.start.date] = item.id }
   formatted_result.reject!{|k,v| k.nil?}
 
+  unless result.status == 200
+    return [result.status, {'Content-Type' => 'application/json'}, JSON.parse(result.body).to_json]
+  end
+
   file = File.read JSON_FILE_NAME
   kimono_json = JSON.parse file
   kimono_json_without_header = kimono_json["results"]["classes"].drop(1) #omit header
@@ -126,7 +130,7 @@ get '/' do
     method     = "calendar_api.events.insert"
     parameters = {'calendarId' => ENV['CAL_ID']}
     if formatted_result[req["start"]["date"]]
-      method = "calendar_api.events.update"
+      method = "calendar_api.events.patch"
       parameters['eventId'] = formatted_result[req["start"]["date"]]
     end
     batch.add(api_method: eval(method),

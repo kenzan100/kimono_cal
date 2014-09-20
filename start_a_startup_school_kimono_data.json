@@ -1,13 +1,13 @@
 {
   "name": "start_a_startup_course_schedule",
   "count": 21,
-  "frequency": "Daily",
-  "version": 1,
+  "frequency": "Every hour",
+  "version": 2,
   "newdata": false,
   "lastrunstatus": "success",
-  "thisversionrun": "Wed Sep 17 2014 07:07:17 GMT+0000 (UTC)",
-  "lastsuccess": "Fri Sep 19 2014 07:07:25 GMT+0000 (UTC)",
-  "nextrun": "Sat Sep 20 2014 07:07:25 GMT+0000 (UTC)",
+  "thisversionrun": "Sat Sep 20 2014 04:09:17 GMT+0000 (UTC)",
+  "lastsuccess": "Sat Sep 20 2014 12:10:59 GMT+0000 (UTC)",
+  "nextrun": "Sat Sep 20 2014 14:10:58 GMT+0000 (UTC)",
   "results": {
     "classes": [
       {
@@ -20,9 +20,9 @@
       },
       {
         "date": "9/23/14",
-        "speaker": "Sam Altman, \nPresident, Y Combinator",
+        "speaker": "Sam Altman, \nPresident, Y Combinator\nDustin Moskovitz, \nCofounder, Facebook, Cofounder, Asana, Cofounder, Good Ventures",
         "topic": {
-          "text": "Welcome, and Ideas, Products, Teams and Execution Part I",
+          "text": "Welcome, and Ideas, Products, Teams and Execution Part I Why to Start a Startup",
           "href": "http://startupclass.samaltman.com/courses/lec01/"
         }
       },
