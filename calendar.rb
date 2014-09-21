@@ -9,6 +9,7 @@ require 'byebug' if development?
 require 'date'
 require 'json'
 require 'rest_client'
+require 'chronic'
 
 enable :sessions
 
@@ -91,24 +92,58 @@ get '/oauth2callback' do
   redirect to('/')
 end
 
-get '/kimono' do
-  response = RestClient.get "https://www.kimonolabs.com/api/5bpn6e0g?apikey=#{ENV['KIMONO_API_KEY']}"
-  File.open(JSON_FILE_NAME, 'w'){|file| file.write response}
-  [200, {'Content-Type' => 'application/json'}, JSON.parse(response)["results"]["classes"].to_json]
+post '/kimono' do
+  api_id = params[:api_id]
+  puts api_id
+  response = RestClient.get "https://www.kimonolabs.com/api/#{api_id}?apikey=#{ENV['KIMONO_API_KEY']}"
+  # File.open(JSON_FILE_NAME, 'w'){|file| file.write response}
+  byebug
+  [200, {'Content-Type' => 'application/json'}, JSON.parse(response).to_json]
+end
+
+get '/calendars' do
+  result = api_client.execute(api_method: calendar_api.calendar_list.list,
+                              parameters: { 'calendarId' => ENV['CAL_ID'] },
+                              authorization: user_credentials)
+  return [result.status, {'Content-Type' => 'application/json'}, JSON.parse(result.body).to_json]
+end
+
+get '/apis' do
+  @kimono_api_list = {
+    "start_a_startup_course_schedule" => "5bpn6e0g",
+    "akb48_theater_detailed_schedule" => "67vq5vuy"
+  }
+
+  result = api_client.execute(api_method: calendar_api.calendar_list.list,
+                              parameters: { 'calendarId' => ENV['CAL_ID'] },
+                              authorization: user_credentials)
+  unless result.status == 200
+    return [result.status, {'Content-Type' => 'application/json'}, JSON.parse(result.body).to_json]
+  end
+  @calendar_list = result.data.items.map{|item| [item.summary, item.id]}
+  erb :available_apis
 end
 
 get '/' do
+  "go to available endpoints directly."
+end
+
+post '/' do
+  cal_id = params[:calendar_id]
+  puts cal_id
   result = api_client.execute(api_method: calendar_api.events.list,
-                              parameters: { 'calendarId' => ENV['CAL_ID'] },
+                              parameters: { 'calendarId' => cal_id },
                               authorization: user_credentials)
   formatted_result = {}
   result.data.items.each{|item| formatted_result[item.start.date] = item.id }
   formatted_result.reject!{|k,v| k.nil?}
 
-  unless result.status == 200
-    return [result.status, {'Content-Type' => 'application/json'}, JSON.parse(result.body).to_json]
-  end
+  # unless result.status == 200
+  #   return [result.status, {'Content-Type' => 'application/json'}, JSON.parse(result.body).to_json]
+  # end
+end
 
+get 'WIP' do
   file = File.read JSON_FILE_NAME
   kimono_json = JSON.parse file
   kimono_json_without_header = kimono_json["results"]["classes"].drop(1) #omit header
