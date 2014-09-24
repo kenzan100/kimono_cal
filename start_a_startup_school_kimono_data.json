@@ -2,12 +2,12 @@
   "name": "start_a_startup_course_schedule",
   "count": 21,
   "frequency": "Every hour",
-  "version": 2,
+  "version": 3,
   "newdata": false,
   "lastrunstatus": "success",
-  "thisversionrun": "Sat Sep 20 2014 04:09:17 GMT+0000 (UTC)",
-  "lastsuccess": "Sun Sep 21 2014 00:11:23 GMT+0000 (UTC)",
-  "nextrun": "Sun Sep 21 2014 02:11:23 GMT+0000 (UTC)",
+  "thisversionrun": "Tue Sep 23 2014 16:15:29 GMT+0000 (UTC)",
+  "lastsuccess": "Wed Sep 24 2014 00:15:54 GMT+0000 (UTC)",
+  "nextrun": "Wed Sep 24 2014 02:15:50 GMT+0000 (UTC)",
   "results": {
     "classes": [
       {
@@ -19,11 +19,14 @@
         }
       },
       {
-        "date": "9/23/14",
+        "date": {
+          "text": "9/23/14",
+          "href": "http://startupclass.samaltman.com/courses/lec01"
+        },
         "speaker": "Sam Altman, \nPresident, Y Combinator\nDustin Moskovitz, \nCofounder, Facebook, Cofounder, Asana, Cofounder, Good Ventures",
         "topic": {
           "text": "Welcome, and Ideas, Products, Teams and Execution Part I Why to Start a Startup",
-          "href": "http://startupclass.samaltman.com/courses/lec01/"
+          "href": ""
         }
       },
       {
@@ -94,7 +97,7 @@
         "date": "10/23/14",
         "speaker": "Alfred Lin, \nFormer COO, Zappos and Partner, Sequoia Capital",
         "topic": {
-          "text": "Company Culture and Buliding a Team, Part I",
+          "text": "Company Culture and Building a Team, Part I",
           "href": ""
         }
       },

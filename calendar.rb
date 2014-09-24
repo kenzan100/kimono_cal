@@ -114,13 +114,18 @@ get '/' do
   kimono_json_without_header = kimono_json["results"]["classes"].drop(1) #omit header
   kimono_result = kimono_json_without_header.map do |a_class|
     date = a_class["date"]
+    description = ""
+    if date.is_a?(Hash)
+      description += "#{date.fetch("href","")}\n"
+      date = date["text"]
+    end
     date_arr = date.split("/")
     year  = "20" + date_arr[-1]
     month = "%02d" % date_arr[0].to_i
     day   = "%02d" % date_arr[1].to_i
     formatted_date = [year,month,day].join("-")
     { 'summary'     => a_class["topic"]["text"],
-      'description' => "#{a_class["speaker"]}\n\n#{a_class["topic"]["href"]}",
+      'description' => description += "#{a_class["speaker"]}\n\n#{a_class["topic"]["href"]}",
       'start'       => {'date' => formatted_date},
       'end'         => {'date' => formatted_date} }
   end
