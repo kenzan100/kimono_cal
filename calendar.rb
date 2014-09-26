@@ -4,8 +4,8 @@ require 'google/api_client/client_secrets'
 require 'google/api_client/auth/file_storage'
 require 'sinatra'
 require 'sinatra/reloader' if development?
-require 'logger'
 require 'byebug' if development?
+require 'logger'
 require 'date'
 require 'json'
 require 'rest_client'
