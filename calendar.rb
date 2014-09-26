@@ -94,33 +94,25 @@ end
 
 post '/kimono' do
   api_id = params[:api_id]
-  puts api_id
   response = RestClient.get "https://www.kimonolabs.com/api/#{api_id}?apikey=#{ENV['KIMONO_API_KEY']}"
-  # File.open(JSON_FILE_NAME, 'w'){|file| file.write response}
-  byebug
-  [200, {'Content-Type' => 'application/json'}, JSON.parse(response).to_json]
-end
-
-get '/calendars' do
-  result = api_client.execute(api_method: calendar_api.calendar_list.list,
-                              parameters: { 'calendarId' => ENV['CAL_ID'] },
-                              authorization: user_credentials)
-  return [result.status, {'Content-Type' => 'application/json'}, JSON.parse(result.body).to_json]
+  if params[:cal_parser]
+    kimono_hash = JSON.parse response
+    api_name = kimono_hash["name"]
+    response = KIMONO_API_LIST[api_name][:parser].call(kimono_hash).to_json
+  end
+  response = JSON.parse(response).to_json
+  [200, {'Content-Type' => 'application/json'}, response]
 end
 
 get '/apis' do
-  @kimono_api_list = {
-    "start_a_startup_course_schedule" => "5bpn6e0g",
-    "akb48_theater_detailed_schedule" => "67vq5vuy"
-  }
-
   result = api_client.execute(api_method: calendar_api.calendar_list.list,
                               parameters: { 'calendarId' => ENV['CAL_ID'] },
                               authorization: user_credentials)
   unless result.status == 200
     return [result.status, {'Content-Type' => 'application/json'}, JSON.parse(result.body).to_json]
   end
-  @calendar_list = result.data.items.map{|item| [item.summary, item.id]}
+  @kimono_api_list = KIMONO_API_LIST.map{|label, values| [label, values[:api_id]] }
+  @calendar_list   = result.data.items.map{|item| [item.summary, item.id]}
   erb :available_apis
 end
 
@@ -129,44 +121,34 @@ get '/' do
 end
 
 post '/' do
+  api_id = params[:api_id]
+  kimono_json = RestClient.get "https://www.kimonolabs.com/api/#{api_id}?apikey=#{ENV['KIMONO_API_KEY']}"
+  kimono_hash = JSON.parse kimono_json
+  api_name = kimono_hash["name"]
+  kimono_result = KIMONO_API_LIST[api_name][:parser].call(kimono_hash)
+
   cal_id = params[:calendar_id]
-  puts cal_id
   result = api_client.execute(api_method: calendar_api.events.list,
                               parameters: { 'calendarId' => cal_id },
                               authorization: user_credentials)
   formatted_result = {}
-  result.data.items.each{|item| formatted_result[item.start.date] = item.id }
+  result.data.items.each{|item|
+    formatted_result[item.start.date] = item.id
+    formatted_result[item.start.date_time] = item.id
+  }
   formatted_result.reject!{|k,v| k.nil?}
 
-  # unless result.status == 200
-  #   return [result.status, {'Content-Type' => 'application/json'}, JSON.parse(result.body).to_json]
-  # end
-end
-
-get 'WIP' do
-  file = File.read JSON_FILE_NAME
-  kimono_json = JSON.parse file
-  kimono_json_without_header = kimono_json["results"]["classes"].drop(1) #omit header
-  kimono_result = kimono_json_without_header.map do |a_class|
-    date = a_class["date"]
-    date_arr = date.split("/")
-    year  = "20" + date_arr[-1]
-    month = "%02d" % date_arr[0].to_i
-    day   = "%02d" % date_arr[1].to_i
-    formatted_date = [year,month,day].join("-")
-    { 'summary'     => a_class["topic"]["text"],
-      'description' => "#{a_class["speaker"]}\n\n#{a_class["topic"]["href"]}",
-      'start'       => {'date' => formatted_date},
-      'end'         => {'date' => formatted_date} }
+  unless result.status == 200
+    return [result.status, {'Content-Type' => 'application/json'}, JSON.parse(result.body).to_json]
   end
 
   batch = Google::APIClient::BatchRequest.new
   kimono_result.each do |req|
     method     = "calendar_api.events.insert"
-    parameters = {'calendarId' => ENV['CAL_ID']}
-    if formatted_result[req["start"]["date"]]
+    parameters = {'calendarId' => cal_id}
+    if formatted_result[req["start"]["date"]] || (req["start"]["dateTime"] && formatted_result[Time.parse(req["start"]["dateTime"])])
       method = "calendar_api.events.patch"
-      parameters['eventId'] = formatted_result[req["start"]["date"]]
+      parameters['eventId'] = formatted_result[req["start"]["date"]] || formatted_result[Time.parse(req["start"]["dateTime"])]
     end
     batch.add(api_method: eval(method),
               parameters: parameters,
@@ -182,3 +164,44 @@ get 'WIP' do
   end
   [result.status, {'Content-Type' => 'application/json'}, output.to_json]
 end
+
+#####PARSERS
+PARSER_START_UP_SCHOOL = Proc.new do |kimono_json|
+  kimono_json_without_header = kimono_json["results"]["classes"].drop(1) #omit header
+  kimono_result = kimono_json_without_header.map do |a_class|
+    date = a_class["date"]
+    description = ""
+    if date.is_a?(Hash)
+      description += "#{date.fetch("href","")}\n"
+      date = date["text"]
+    end
+    date_arr = date.split("/")
+    year  = "20" + date_arr[-1]
+    month = "%02d" % date_arr[0].to_i
+    day   = "%02d" % date_arr[1].to_i
+    formatted_date = [year,month,day].join("-")
+    { 'summary'     => a_class["topic"]["text"],
+      'description' => description += "#{a_class["speaker"]}\n\n#{a_class["topic"]["href"]}",
+      'start'       => {'date' => formatted_date},
+      'end'         => {'date' => formatted_date} }
+  end
+  kimono_result
+end
+
+PARSER_AKB48_SCHEDULE = Proc.new do |kimono_json|
+  kimono_json["results"]["akb48_theater_detailed_schedule"].map do |a_show|
+    start_time = a_show["detailed_info"].match(/(\d|:)+/)[0] # assumed format "18:30~"
+    time = "#{a_show["date"]} #{start_time}"
+    start_datetime = Chronic.parse time
+    end_datetime = Chronic.parse('2 hours from now', now: start_datetime)
+    { 'summary'     => a_show["team"]["alt"],
+      'description' => "#{a_show["detailed_info"]}\n\n※公演時間は2時間として仮定しています。",
+      'start'       => {'dateTime' => start_datetime.strftime('%FT%T%:z')},
+      'end'         => {'dateTime' => end_datetime.strftime('%FT%T%:z')} }
+  end
+end
+
+KIMONO_API_LIST = {
+  "start_a_startup_course_schedule" => { api_id: "5bpn6e0g", parser: PARSER_START_UP_SCHOOL },
+  "akb48_theater_detailed_schedule" => { api_id: "67vq5vuy", parser: PARSER_AKB48_SCHEDULE  }
+}
