@@ -1,0 +1,29 @@
+<html>
+  <body>
+    <form action="/kimono" method="post">
+      <select name="api_id">
+        <% @kimono_api_list.each do |k,v| %>
+          <option value="<%= v %>">
+            <%= k %>
+          </option>
+        <% end %>
+      </select>
+      <input type="submit" value="check API json">
+      <input type="submit" name="cal_parser" value="debug Cal Parser">
+    </form>
+    <hr>
+    <form action="/" method="post">
+      <select name="api_id">
+        <% @kimono_api_list.each do |k,v| %>
+          <option value="<%= v %>"><%= k %></option>
+        <% end %>
+      </select>
+      <select name="calendar_id">
+        <% @calendar_list.each do |arr| %>
+          <option value="<%= arr[1] %>"><%= arr[0] %></option>
+        <% end %>
+      </select>
+      <input type="submit" value="update a Cal">
+    </form>
+  </body>
+</html>

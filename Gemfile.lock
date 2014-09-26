@@ -10,6 +10,7 @@ GEM
     byebug (2.7.0)
       columnize (~> 0.3)
       debugger-linecache (~> 1.2)
+    chronic (0.10.2)
     columnize (0.8.9)
     debugger-linecache (1.2.0)
     extlib (0.9.16)
@@ -66,6 +67,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
+  chronic
   google-api-client (>= 0.6)
   rest_client
   sinatra (>= 1.3)
